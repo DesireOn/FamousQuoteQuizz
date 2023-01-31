@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\AnsweredQuestionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnsweredQuestionRepository::class)]
+#[ApiResource]
 class AnsweredQuestion
 {
     #[ORM\Id]
