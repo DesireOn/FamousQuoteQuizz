@@ -2,7 +2,6 @@
 
 namespace App\Controller\ApiPlatform;
 use App\Entity\Visitor;
-use App\Entity\VisitorHistory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Attribute\AsController;
