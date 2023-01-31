@@ -26,6 +26,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             uriTemplate: '/api/visitors/{session}/delete-history',
             controller: DeleteVisitorHistory::class,
             description: 'Deletes history of the visitor',
+            denormalizationContext: ['groups' => ['visitor:history-delete']],
             name: 'history'
         ),
         new GetCollection(),
