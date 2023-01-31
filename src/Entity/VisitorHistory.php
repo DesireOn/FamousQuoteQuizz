@@ -15,7 +15,7 @@ class VisitorHistory
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'visitorHistories')]
+    #[ORM\ManyToOne(inversedBy: 'visitorHistory')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Visitor $visitor = null;
 

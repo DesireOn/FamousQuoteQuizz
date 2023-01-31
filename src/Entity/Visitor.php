@@ -26,11 +26,11 @@ class Visitor
     private array $settings = [];
 
     #[ORM\OneToMany(mappedBy: 'visitor', targetEntity: VisitorHistory::class)]
-    private Collection $visitorHistories;
+    private Collection $visitorHistory;
 
     public function __construct()
     {
-        $this->visitorHistories = new ArrayCollection();
+        $this->visitorHistory = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -65,15 +65,15 @@ class Visitor
     /**
      * @return Collection<int, VisitorHistory>
      */
-    public function getVisitorHistories(): Collection
+    public function getVisitorHistory(): Collection
     {
-        return $this->visitorHistories;
+        return $this->visitorHistory;
     }
 
     public function addVisitorHistory(VisitorHistory $visitorHistory): self
     {
-        if (!$this->visitorHistories->contains($visitorHistory)) {
-            $this->visitorHistories->add($visitorHistory);
+        if (!$this->visitorHistory->contains($visitorHistory)) {
+            $this->visitorHistory->add($visitorHistory);
             $visitorHistory->setVisitor($this);
         }
 
@@ -82,7 +82,7 @@ class Visitor
 
     public function removeVisitorHistory(VisitorHistory $visitorHistory): self
     {
-        if ($this->visitorHistories->removeElement($visitorHistory)) {
+        if ($this->visitorHistory->removeElement($visitorHistory)) {
             // set the owning side to null (unless already changed)
             if ($visitorHistory->getVisitor() === $this) {
                 $visitorHistory->setVisitor(null);
