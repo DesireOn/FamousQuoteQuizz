@@ -157,39 +157,37 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i < 20; $i++) {
-            foreach ($this->quizData as $questionName => $options) {
-                $question = new Question();
-                $question->setName($questionName);
-                $manager->persist($question);
+        foreach ($this->quizData as $questionName => $options) {
+            $question = new Question();
+            $question->setName($questionName);
+            $manager->persist($question);
 
-                foreach ($options as $option) {
-                    $answer = new Answer();
-                    $answer->setName($option['answer']);
-                    $manager->persist($answer);
+            foreach ($options as $option) {
+                $answer = new Answer();
+                $answer->setName($option['answer']);
+                $manager->persist($answer);
 
-                    $questionSuggestion = new QuestionSuggestion();
-                    $questionSuggestion->setQuestion($question);
-                    $questionSuggestion->setAnswer($answer);
-                    $questionSuggestion->setIsCorrect($option['isCorrect']);
+                $questionSuggestion = new QuestionSuggestion();
+                $questionSuggestion->setQuestion($question);
+                $questionSuggestion->setAnswer($answer);
+                $questionSuggestion->setIsCorrect($option['isCorrect']);
 
-                    $question->addQuestionSuggestion($questionSuggestion);
-                    $manager->persist($questionSuggestion);
-                }
-
-                $visitor = new Visitor();
-                $visitor->setSettings([]);
-                $manager->persist($visitor);
-
-                $questionSuggestions = $question->getQuestionSuggestions();
-                $randomAnswer = $questionSuggestions->first()->getAnswer();
-
-                $visitorHistory = new VisitorHistory();
-                $visitorHistory->setVisitor($visitor);
-                $visitorHistory->setQuestion($question);
-                $visitorHistory->setAnswer($randomAnswer);
-                $manager->persist($visitorHistory);
+                $question->addQuestionSuggestion($questionSuggestion);
+                $manager->persist($questionSuggestion);
             }
+
+            $visitor = new Visitor();
+            $visitor->setSettings([]);
+            $manager->persist($visitor);
+
+            $questionSuggestions = $question->getQuestionSuggestions();
+            $randomAnswer = $questionSuggestions->first()->getAnswer();
+
+            $visitorHistory = new VisitorHistory();
+            $visitorHistory->setVisitor($visitor);
+            $visitorHistory->setQuestion($question);
+            $visitorHistory->setAnswer($randomAnswer);
+            $manager->persist($visitorHistory);
         }
 
         $manager->flush();
