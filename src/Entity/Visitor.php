@@ -30,6 +30,7 @@ class Visitor
 
     public function __construct()
     {
+        $this->session = uniqid();
         $this->visitorHistory = new ArrayCollection();
     }
 
