@@ -2,30 +2,40 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\VisitorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => 'visitor:read'],
+    denormalizationContext: ['groups' => 'visitor:write']
+)]
 #[UniqueEntity('session')]
 class Visitor
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ApiProperty(identifier: false)]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $session = null;
+    #[Groups(['visitor:read'])]
+    #[ApiProperty(identifier: true)]
+    private string $session;
 
     #[ORM\Column]
+    #[Groups(['visitor:read'])]
     private array $settings = [];
 
     #[ORM\OneToMany(mappedBy: 'visitor', targetEntity: VisitorHistory::class)]
+    #[Groups(['visitor:read'])]
     private Collection $visitorHistory;
 
     public function __construct()
