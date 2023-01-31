@@ -172,12 +172,23 @@ class AppFixtures extends Fixture
                     $questionSuggestion->setQuestion($question);
                     $questionSuggestion->setAnswer($answer);
                     $questionSuggestion->setIsCorrect($option['isCorrect']);
+
+                    $question->addQuestionSuggestion($questionSuggestion);
                     $manager->persist($questionSuggestion);
                 }
 
                 $visitor = new Visitor();
                 $visitor->setSettings([]);
                 $manager->persist($visitor);
+
+                $questionSuggestions = $question->getQuestionSuggestions();
+                $randomAnswer = $questionSuggestions->first()->getAnswer();
+
+                $visitorHistory = new VisitorHistory();
+                $visitorHistory->setVisitor($visitor);
+                $visitorHistory->setQuestion($question);
+                $visitorHistory->setAnswer($randomAnswer);
+                $manager->persist($visitorHistory);
             }
         }
 
