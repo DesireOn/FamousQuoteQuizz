@@ -6,10 +6,11 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
-#[ApiResource]
+#[ApiResource()]
 class Question
 {
     #[ORM\Id]
@@ -73,5 +74,15 @@ class Question
         }
 
         return $this;
+    }
+
+    /**
+     * @return ReadableCollection
+     */
+    public function getCorrectAnswer(): ReadableCollection
+    {
+        return $this->getQuestionSuggestions()->filter(function (QuestionSuggestion $questionSuggestion) {
+            return $questionSuggestion->isIsCorrect() === true;
+        });
     }
 }
