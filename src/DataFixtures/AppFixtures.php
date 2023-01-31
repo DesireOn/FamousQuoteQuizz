@@ -176,7 +176,6 @@ class AppFixtures extends Fixture
                 }
 
                 $visitor = new Visitor();
-                $visitor->setSession(uniqid());
                 $visitor->setSettings([]);
                 $manager->persist($visitor);
             }

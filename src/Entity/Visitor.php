@@ -44,13 +44,6 @@ class Visitor
         return $this->session;
     }
 
-    public function setSession(string $session): self
-    {
-        $this->session = $session;
-
-        return $this;
-    }
-
     public function getSettings(): array
     {
         return $this->settings;
