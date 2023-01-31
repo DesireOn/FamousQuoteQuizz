@@ -31,7 +31,7 @@ class Visitor
     private string $session;
 
     #[ORM\Column]
-    #[Groups(['visitor:read'])]
+    #[Groups(['visitor:read', 'visitor:write'])]
     private array $settings = [];
 
     #[ORM\OneToMany(mappedBy: 'visitor', targetEntity: VisitorHistory::class)]
