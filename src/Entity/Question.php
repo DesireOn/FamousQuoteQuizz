@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 #[ApiResource()]
@@ -52,6 +53,22 @@ class Question
     public function getQuestionSuggestions(): Collection
     {
         return $this->questionSuggestions;
+    }
+
+    /**
+     * @param Answer $answer
+     * @return QuestionSuggestion
+     */
+    public function getSuggestionByAnswer(Answer $answer): QuestionSuggestion
+    {
+        $suggestion = $this->questionSuggestions->filter(function (QuestionSuggestion $suggestion) use ($answer) {
+            return $suggestion->getAnswer()->getId() === $answer->getId();
+        })->first();
+
+        if ($suggestion) {
+            return $suggestion;
+        }
+        throw new LogicException('Each answer should have a related question');
     }
 
     public function addQuestionSuggestion(QuestionSuggestion $questionSuggestion): self
