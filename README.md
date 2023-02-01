@@ -49,5 +49,5 @@ symfony serve -d --allow-http
 
 Then run:
 ```
-yarn watch
+yarn dev-server
 ```
