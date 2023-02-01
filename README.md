@@ -44,5 +44,5 @@ Then, to start the web server, open a terminal, move into the
 project, and run:
 
 ```
-symfony serve
+symfony serve -d --allow-http
 ```
