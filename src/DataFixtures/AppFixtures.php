@@ -177,7 +177,6 @@ class AppFixtures extends Fixture
             }
 
             $visitor = new Visitor();
-            $visitor->setSettings([]);
             $manager->persist($visitor);
 
             $questionSuggestions = $question->getQuestionSuggestions();
