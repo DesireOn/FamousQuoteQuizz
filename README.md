@@ -46,3 +46,8 @@ project, and run:
 ```
 symfony serve -d --allow-http
 ```
+
+Then run:
+```
+yarn watch
+```
