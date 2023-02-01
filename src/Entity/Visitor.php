@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Controller\ApiPlatform\DeleteVisitorHistory;
 use App\Controller\ApiPlatform\GenerateNextQuestion;
+use App\Enum\ViewMode;
 use App\Repository\VisitorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -73,6 +74,9 @@ class Visitor
     {
         $this->session = uniqid();
         $this->visitorHistory = new ArrayCollection();
+        $this->settings = [
+            'view_mode' => ViewMode::BINARY
+        ];
     }
 
     public function getId(): ?int
