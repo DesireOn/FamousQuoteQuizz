@@ -181,13 +181,15 @@ class AppFixtures extends Fixture
             $manager->persist($visitor);
 
             $questionSuggestions = $question->getQuestionSuggestions();
-            $randomAnswer = $questionSuggestions->first()->getAnswer();
+            foreach ($questionSuggestions as $questionSuggestion) {
+                $answer = $questionSuggestion->getAnswer();
 
-            $visitorHistory = new VisitorHistory();
-            $visitorHistory->setVisitor($visitor);
-            $visitorHistory->setQuestion($question);
-            $visitorHistory->setAnswer($randomAnswer);
-            $manager->persist($visitorHistory);
+                $visitorHistory = new VisitorHistory();
+                $visitorHistory->setVisitor($visitor);
+                $visitorHistory->setQuestion($question);
+                $visitorHistory->setAnswer($answer);
+                $manager->persist($visitorHistory);
+            }
         }
 
         $manager->flush();
