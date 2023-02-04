@@ -1,19 +1,14 @@
 <template>
-  <view-mode-component :mode="mode"/>
+  <visitor></visitor>
 </template>
 
 <script>
-import ViewModeComponent from '../components/viewMode.vue'
+import Visitor from "../components/visitor.vue";
 
 export default {
   name: 'Index',
   components: {
-    ViewModeComponent
-  },
-  data() {
-    return {
-      mode: 'binary'
-    };
+    Visitor,
   },
 };
 </script>
