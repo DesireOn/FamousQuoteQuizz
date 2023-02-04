@@ -31,7 +31,12 @@ class GenerateNextQuestionProvider implements ProviderInterface
             return $answeredQuestion->getQuestion()->getId();
         });
 
-        $unansweredQuestions = $this->questionRepository->findUnansweredQuestions($ids->toArray());
+        if ($ids->isEmpty() === false) {
+            $unansweredQuestions = $this->questionRepository->findUnansweredQuestions($ids->toArray());
+        } else {
+            $unansweredQuestions = $this->questionRepository->findBy([],[], 10);
+        }
+
         if (count($unansweredQuestions) > 0) {
             $key = array_rand($unansweredQuestions);
             $visitor->setNextQuestion($unansweredQuestions[$key]);
