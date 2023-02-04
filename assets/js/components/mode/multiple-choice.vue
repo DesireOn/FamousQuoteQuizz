@@ -13,14 +13,14 @@
     </v-card>
   </div>
   <div class="d-flex flex-column align-center justify-center mx-auto mt-3">
-    <v-btn
-        class="mb-3"
+    <v-radio-group>
+      <v-radio
         v-for="questionSuggestion in visitor.nextQuestion.questionSuggestions"
         :key="questionSuggestion['@id']"
-        variant="tonal"
-    >
-      {{ questionSuggestion.answer.name }}
-    </v-btn>
+        :label="questionSuggestion.answer.name"
+        :value="questionSuggestion['@id']">
+      </v-radio>
+    </v-radio-group>
   </div>
 </template>
 
