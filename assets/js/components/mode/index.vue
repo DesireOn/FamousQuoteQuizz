@@ -1,11 +1,6 @@
 <template>
   <div v-if="visitor && visitor.settings && visitor.settings.view_mode === 'binary'">
-    <v-btn variant="outlined">
-      Binary (Yes/No)
-    </v-btn>
-    <v-btn variant="plain">
-      Multiple choice
-    </v-btn>
+    <binary :visitor="visitor"/>
   </div>
   <div v-if="visitor && visitor.settings && visitor.settings.view_mode === 'multiple_choice'">
     <multiple-choice :visitor="visitor"/>
@@ -15,10 +10,13 @@
 <script>
 
 import MultipleChoice from "./multiple-choice.vue";
+import Binary from "./binary.vue";
 
 export default {
   name: 'viewMode',
-  components: {MultipleChoice},
+  components: {
+    MultipleChoice, Binary
+  },
   props: {
     visitor: {
       type: Object,
