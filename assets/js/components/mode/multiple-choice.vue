@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex justify-space-around">
     <v-btn variant="outlined">
-      Multiple choice
+      Multiple choice Mode
     </v-btn>
     <v-btn variant="plain">
-      Binary (Yes/No)
+      Binary (Yes/No) Mode
     </v-btn>
   </div>
   <div class="d-flex center mt-3">
