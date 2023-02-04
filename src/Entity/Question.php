@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ReadableCollection;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 #[ApiResource()]
@@ -20,9 +21,11 @@ class Question
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('visitor:read')]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: QuestionSuggestion::class)]
+    #[Groups('visitor:read')]
     private Collection $questionSuggestions;
 
     public function __construct()

@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\QuestionSuggestionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: QuestionSuggestionRepository::class)]
 #[ApiResource]
@@ -17,10 +18,12 @@ class QuestionSuggestion
 
     #[ORM\ManyToOne(inversedBy: 'questionSuggestions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('visitor:read')]
     private ?Question $question = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('visitor:read')]
     private ?Answer $answer = null;
 
     #[ORM\Column]
