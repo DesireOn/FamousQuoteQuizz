@@ -1,14 +1,15 @@
 <template>
-<!--  <view-mode-component :visitor="this.visitor" :is-binary-mode="this.isBinaryMode"/>-->
+  <mode-component :visitor="this.visitor" />
 </template>
 
 <script>
 import axios from 'axios';
+import ModeComponent from './mode'
 
 export default {
   name: 'visitor',
   components: {
-    // ViewModeComponent
+    ModeComponent
   },
   data() {
     return {
