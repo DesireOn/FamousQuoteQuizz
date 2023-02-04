@@ -11,7 +11,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Controller\ApiPlatform\DeleteVisitorHistory;
-use App\Controller\ApiPlatform\GenerateNextQuestion;
+use App\DataProvider\GenerateNextQuestionProvider;
 use App\Enum\ViewMode;
 use App\Repository\VisitorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,11 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(),
-        new Get(
-            uriTemplate: '/api/visitors/{session}/generate-next-question',
-            controller: GenerateNextQuestion::class,
-            normalizationContext: ['groups' => ['visitor:next-question']]
-        ),
+        new Get(provider: GenerateNextQuestionProvider::class),
         new Post(
             uriTemplate: '/api/visitors/{session}/delete-history',
             controller: DeleteVisitorHistory::class,
@@ -67,7 +63,7 @@ class Visitor
     #[Groups(['visitor:read'])]
     private Collection $visitorHistory;
 
-    #[Groups(['visitor:next-question'])]
+    #[Groups(['visitor:read'])]
     private ?Question $nextQuestion = null;
 
     public function __construct()
