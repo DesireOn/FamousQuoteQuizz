@@ -8,7 +8,7 @@
     </v-btn>
   </div>
   <div class="d-flex center mt-3">
-    <v-card class="mx-auto" color="purple">
+    <v-card class="mx-auto" color="primary">
       <v-card-text>"{{ visitor.nextQuestion.name }}"</v-card-text>
     </v-card>
   </div>
