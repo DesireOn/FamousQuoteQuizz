@@ -102,14 +102,14 @@ class Question
         return $this;
     }
 
-    /**
-     * @return ReadableCollection
-     */
-    public function getCorrectAnswer(): ReadableCollection
+    public function getCorrectAnswer(): ?Answer
     {
-        return $this->getQuestionSuggestions()->filter(function (QuestionSuggestion $questionSuggestion) {
+        /** @var QuestionSuggestion $suggestion */
+        $suggestion = $this->getQuestionSuggestions()->filter(function (QuestionSuggestion $questionSuggestion) {
             return $questionSuggestion->isIsCorrect() === true;
-        });
+        })->first();
+
+        return $suggestion?->getAnswer();
     }
 
     public function getQuiz(): ?Quiz
