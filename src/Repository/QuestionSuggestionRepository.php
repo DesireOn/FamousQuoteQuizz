@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Answer;
+use App\Entity\Question;
 use App\Entity\QuestionSuggestion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException as NonUniqueResultExceptionAlias;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -54,13 +57,23 @@ class QuestionSuggestionRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?QuestionSuggestion
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @param Question $question
+     * @param Answer $answer
+     * @return QuestionSuggestion|null
+     * @throws NonUniqueResultExceptionAlias
+     */
+    public function findSuggestionByQuestionAndAnswer(Question $question, Answer $answer): ?QuestionSuggestion
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.question = :question')
+            ->setParameter('question', $question)
+            ->andWhere('q.answer = :answer')
+            ->setParameter('answer', $answer)
+            ->andWhere('q.isCorrect = :isCorrect')
+            ->setParameter('isCorrect', 1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
