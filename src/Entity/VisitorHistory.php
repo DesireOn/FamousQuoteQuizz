@@ -49,7 +49,8 @@ class VisitorHistory
     #[Groups(['visitor_history:read', 'visitor_history:write'])]
     private ?Answer $answer = null;
 
-    private bool $isCorrect;
+    #[ORM\Column]
+    private ?bool $isCorrect = null;
 
     public function getId(): ?int
     {
