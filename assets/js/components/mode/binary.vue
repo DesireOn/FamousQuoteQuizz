@@ -46,7 +46,7 @@ export default {
       selectedSuggestion
     }
   },
-  emits: ['change-view'],
+  emits: ['change-view', 'generate-next-question'],
   methods: {
     changeView(mode) {
       this.$emit('change-view', mode);
