@@ -21,8 +21,9 @@ class Quiz
     #[ORM\OneToMany(mappedBy: 'quiz', targetEntity: Question::class)]
     private Collection $questions;
 
-    public function __construct()
+    public function __construct(string $name)
     {
+        $this->name = $name;
         $this->questions = new ArrayCollection();
     }
 
