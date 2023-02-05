@@ -129,6 +129,8 @@ export default {
       await getResponse.data.visitorHistory.forEach(
         history => axios.delete(history)
       )
+      await this.generateNextQuestion();
+      this.showScoring = false;
     }
   }
 };
