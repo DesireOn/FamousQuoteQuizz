@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex justify-space-around">
-    <v-btn variant="outlined">
-      Binary (Yes/No) Mode
-    </v-btn>
-    <v-btn variant="plain">
+    <v-btn variant="plain" @click="changeView('multiple_choice')">
       Multiple choice Mode
+    </v-btn>
+    <v-btn variant="outlined" @click="changeView('binary')">
+      Binary (Yes/No) Mode
     </v-btn>
   </div>
   <div class="d-flex center mt-3">
@@ -44,6 +44,12 @@ export default {
 
     return {
       selectedSuggestion
+    }
+  },
+  emits: ['change-view'],
+  methods: {
+    changeView(mode) {
+      this.$emit('change-view', mode);
     }
   }
 }
