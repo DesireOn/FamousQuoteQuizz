@@ -50,6 +50,12 @@
       <v-card-text>Number of wrong answers: {{ scoring.numberOfWrongAnswers }}</v-card-text>
       <v-card-text>Your success rate is: {{ scoring.successRate }}%</v-card-text>
     </v-card>
+
+    <div class="d-flex justify-space-around">
+      <v-btn color="primary" @click="startAgain" class="mt-3">
+        Start Again
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -117,6 +123,12 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+    async startAgain() {
+      const getResponse = await axios.get(this.visitor['@id']);
+      await getResponse.data.visitorHistory.forEach(
+        history => axios.delete(history)
+      )
     }
   }
 };
