@@ -126,11 +126,13 @@ export default {
     },
     async startAgain() {
       const getResponse = await axios.get(this.visitor['@id']);
-      await getResponse.data.visitorHistory.forEach(
+      let newVisitorObject = await getResponse.data;
+      await newVisitorObject.visitorHistory.forEach(
         history => axios.delete(history)
       )
       await this.generateNextQuestion();
       this.showScoring = false;
+      this.visitor = new newVisitorObject;
     }
   }
 };
