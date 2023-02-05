@@ -192,6 +192,7 @@ class AppFixtures extends Fixture
                 $visitorHistory->setVisitor($visitor);
                 $visitorHistory->setQuestion($question);
                 $visitorHistory->setAnswer($answer);
+                $visitorHistory->setIsCorrect(true);
                 $manager->persist($visitorHistory);
             }
         }
