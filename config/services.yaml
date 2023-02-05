@@ -25,3 +25,7 @@ services:
     App\State\VisitorHistoryBinaryStateProcessor:
         bind:
             $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
+
+    App\State\VisitorHistoryMultipleChoiceStateProcessor:
+        bind:
+            $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'

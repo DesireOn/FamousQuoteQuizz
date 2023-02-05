@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\Put;
 use App\DataProvider\GetCorrectAnswerProvider;
 use App\Repository\VisitorHistoryRepository;
 use App\State\VisitorHistoryBinaryStateProcessor;
+use App\State\VisitorHistoryMultipleChoiceStateProcessor;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -20,10 +21,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new Get(provider: GetCorrectAnswerProvider::class),
         new GetCollection(),
-        new Post(),
         new Post(
             uriTemplate: '/visitor_histories/binary',
             processor: VisitorHistoryBinaryStateProcessor::class
+        ),
+        new Post(
+            uriTemplate: '/visitor_histories/multiple-choice',
+            processor: VisitorHistoryMultipleChoiceStateProcessor::class
         ),
         new Put(),
         new Patch(),
