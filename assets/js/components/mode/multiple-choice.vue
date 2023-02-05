@@ -7,7 +7,7 @@
       Binary (Yes/No) Mode
     </v-btn>
   </div>
-  <div v-if="!showSuccess && !showError">
+  <div v-if="!showSuccess && !showError && !showScoring">
     <div class="d-flex center mt-3">
       <v-card class="mx-auto" color="primary">
         <v-card-text>"{{ visitor.nextQuestion.name }}"</v-card-text>
@@ -41,6 +41,16 @@
       </v-btn>
     </div>
   </div>
+
+  <div v-if="showScoring">
+    <v-card class="mx-auto mt-3" color="green">
+      <v-card-text>Congrats!</v-card-text>
+      <v-card-text>You have successfully completed our quiz!</v-card-text>
+      <v-card-text>Number of correct answers: {{ scoring.numberOfCorrectAnswers }}</v-card-text>
+      <v-card-text>Number of wrong answers: {{ scoring.numberOfWrongAnswers }}</v-card-text>
+      <v-card-text>Your success rate is: {{ scoring.successRate }}</v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -65,7 +75,9 @@ export default {
     return {
       selectedAnswer: null,
       showSuccess: false,
-      showError: false
+      showError: false,
+      scoring: {},
+      showScoring: false
     }
   },
   methods: {
@@ -93,8 +105,13 @@ export default {
     async generateNextQuestion() {
       try {
         const getResponse = await axios.get(this.visitor['@id']+'/next-question');
-        // this.visitor.nextQuestion = getResponse.data.nextQuestion;
-        this.$emit('generate-next-question', getResponse.data.nextQuestion);
+        if (getResponse.data.nextQuestion === undefined) { // No more questions left for this visitor
+          const getResponse = await axios.get('/api/scorings/'+this.visitor.session);
+          this.scoring = getResponse.data;
+          this.showScoring = true;
+        } else {
+          this.$emit('generate-next-question', getResponse.data.nextQuestion);
+        }
         this.showSuccess = false;
         this.showError = false;
       } catch (error) {
