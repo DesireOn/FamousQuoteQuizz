@@ -17,7 +17,7 @@ use App\Entity\Visitor;
 class Scoring
 {
     #[ApiProperty(identifier: true)]
-    private string $sessionId;
+    private string $session;
 
     private Visitor $visitor;
 
@@ -30,18 +30,18 @@ class Scoring
     /**
      * @return string
      */
-    public function getSessionId(): string
+    public function getSession(): string
     {
-        return $this->sessionId;
+        return $this->session;
     }
 
     /**
-     * @param string $sessionId
+     * @param string $session
      * @return Scoring
      */
-    public function setSessionId(string $sessionId): self
+    public function setSession(string $session): self
     {
-        $this->sessionId = $sessionId;
+        $this->session = $session;
 
         return $this;
     }

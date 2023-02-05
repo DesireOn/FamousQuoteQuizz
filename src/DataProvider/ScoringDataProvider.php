@@ -20,13 +20,13 @@ class ScoringDataProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $visitor = $this->visitorRepository->findOneBy(['session' => $uriVariables['sessionId']]);
+        $visitor = $this->visitorRepository->findOneBy(['session' => $uriVariables['session']]);
         if (is_null($visitor)) {
             throw new NotFoundHttpException();
         }
 
         $scoring = new Scoring();
-        $scoring->setSessionId($visitor->getSession());
+        $scoring->setSession($visitor->getSession());
         $scoring->setVisitor($visitor);
 
         $this->calculator->calculate($scoring);
