@@ -23,8 +23,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(),
         new Get(provider: GenerateNextQuestionProvider::class),
+        new Get(
+            uriTemplate: '/visitors/{session}/next-question',
+            provider: GenerateNextQuestionProvider::class
+        ),
         new Post(
             uriTemplate: '/api/visitors/{session}/delete-history',
             controller: DeleteVisitorHistory::class,
