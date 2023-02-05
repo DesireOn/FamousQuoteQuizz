@@ -92,7 +92,7 @@ export default {
     },
     async saveHistory() {
       try {
-        const postResponse = await axios.post('/api/visitor_histories', {
+        const postResponse = await axios.post('/api/visitor_histories/multiple-choice', {
           'visitor': this.visitor['@id'],
           'question': this.visitor.nextQuestion['@id'],
           'answer': this.selectedAnswer
