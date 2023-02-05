@@ -36,7 +36,7 @@
     <multiple-choice-error-component v-if="showError"/>
 
     <div class="d-flex justify-space-around">
-      <v-btn color="primary" @click="generateNextQuestion">
+      <v-btn color="primary" @click="generateNextQuestion" class="mt-3">
         Next Question
       </v-btn>
     </div>
