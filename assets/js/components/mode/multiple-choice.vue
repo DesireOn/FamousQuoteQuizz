@@ -55,12 +55,14 @@ export default {
     },
     async saveHistory() {
       try {
-        const response = await axios.post('/api/visitor_histories', {
+        const postResponse = await axios.post('/api/visitor_histories', {
           'visitor': this.visitor['@id'],
           'question': this.visitor.nextQuestion['@id'],
           'answer': this.selectedAnswer
         });
-        console.log(response.data);
+
+        const getResponse = await axios.get(postResponse.data['@id']);
+        console.log(getResponse);
       } catch (error) {
         console.error(error);
       }
