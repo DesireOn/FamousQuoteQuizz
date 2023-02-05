@@ -16,7 +16,6 @@ class VisitorHistoryBinaryStateProcessor implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
     {
         if ($data instanceof VisitorHistory) {
-            $data->setIsCorrect(false);
             $correctAnswer = $data->getQuestion()->getCorrectAnswer();
             if ($correctAnswer) {
                 $this->checkIfAnswerIsCorrect($data, $correctAnswer);
@@ -29,6 +28,8 @@ class VisitorHistoryBinaryStateProcessor implements ProcessorInterface
     private function checkIfAnswerIsCorrect(VisitorHistory $visitorHistory, Answer $correctAnswer)
     {
         $submittedAnswer = $visitorHistory->getAnswer();
+
+        $visitorHistory->setIsCorrect(false);
         if ($visitorHistory->getBinaryValue() === 'y') {
             if ($submittedAnswer->getId() === $correctAnswer->getId()) {
                 $visitorHistory->setIsCorrect(true);
