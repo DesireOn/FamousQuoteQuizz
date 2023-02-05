@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\QuestionSuggestion;
+use App\Entity\Quiz;
 use App\Entity\Visitor;
 use App\Entity\VisitorHistory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -157,9 +158,13 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $quiz = new Quiz('Main Quiz');
+        $manager->persist($quiz);
+
         foreach ($this->quizData as $questionName => $options) {
             $question = new Question();
             $question->setName($questionName);
+            $question->setQuiz($quiz);
             $manager->persist($question);
 
             foreach ($options as $option) {
