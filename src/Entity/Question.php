@@ -28,6 +28,9 @@ class Question
     #[Groups('visitor:read')]
     private Collection $questionSuggestions;
 
+    #[ORM\ManyToOne(inversedBy: 'questions')]
+    private ?Quiz $quiz = null;
+
     public function __construct()
     {
         $this->questionSuggestions = new ArrayCollection();
@@ -104,5 +107,17 @@ class Question
         return $this->getQuestionSuggestions()->filter(function (QuestionSuggestion $questionSuggestion) {
             return $questionSuggestion->isIsCorrect() === true;
         });
+    }
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?Quiz $quiz): self
+    {
+        $this->quiz = $quiz;
+
+        return $this;
     }
 }
