@@ -58,7 +58,10 @@ class Question
      */
     public function getQuestionSuggestions(): Collection
     {
-        return $this->questionSuggestions;
+        $suggestions = $this->questionSuggestions->toArray();
+        shuffle($suggestions);
+
+        return new ArrayCollection($suggestions);
     }
 
     /**
