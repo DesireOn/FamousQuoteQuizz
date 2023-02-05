@@ -17,7 +17,7 @@
       <v-radio-group v-model="selectedAnswer">
         <v-radio
             color="primary"
-            v-for="option in options"
+            v-for="option in visitor.nextQuestion.questionSuggestions"
             :key="option['@id']"
             :label="option.answer.name"
             :value="option.answer['@id']">
@@ -60,11 +60,10 @@ export default {
       required: true
     },
   },
-  emits: ['change-view'],
+  emits: ['change-view', 'generate-next-question'],
   data() {
     return {
       selectedAnswer: null,
-      options: this.visitor.nextQuestion.questionSuggestions,
       showSuccess: false,
       showError: false
     }
@@ -93,18 +92,11 @@ export default {
     },
     async generateNextQuestion() {
       try {
-        const postResponse = await axios.post('/api/visitor_histories', {
-          'visitor': this.visitor['@id'],
-          'question': this.visitor.nextQuestion['@id'],
-          'answer': this.selectedAnswer
-        });
-
-        const getResponse = await axios.get(postResponse.data['@id']);
-        if (getResponse.data.correct) {
-          this.showSuccess = true;
-        } else {
-          this.showError = true;
-        }
+        const getResponse = await axios.get(this.visitor['@id']+'/next-question');
+        // this.visitor.nextQuestion = getResponse.data.nextQuestion;
+        this.$emit('generate-next-question', getResponse.data.nextQuestion);
+        this.showSuccess = false;
+        this.showError = false;
       } catch (error) {
         console.error(error);
       }

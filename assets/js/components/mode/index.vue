@@ -1,9 +1,9 @@
 <template>
   <div v-if="visitor && visitor.settings && visitor.settings.view_mode === 'binary'">
-    <binary :visitor="visitor" @change-view="changeView"/>
+    <binary :visitor="visitor" @change-view="changeView" @generate-next-question="generateNextQuestion"/>
   </div>
   <div v-if="visitor && visitor.settings && visitor.settings.view_mode === 'multiple_choice'">
-    <multiple-choice :visitor="visitor" @change-view="changeView"/>
+    <multiple-choice :visitor="visitor" @change-view="changeView" @generate-next-question="generateNextQuestion"/>
   </div>
 </template>
 
@@ -26,6 +26,9 @@ export default {
   methods: {
     changeView(mode) {
       this.visitor.settings.view_mode = mode;
+    },
+    generateNextQuestion(nextQuestion) {
+      this.visitor.nextQuestion = nextQuestion;
     }
   }
 };
