@@ -29,8 +29,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new Patch(),
         new Delete(),
     ],
-    normalizationContext: ['groups' => 'visitor_history:read'],
-    denormalizationContext: ['groups' => 'visitor_history:write']
+    normalizationContext: ['groups' => ['visitor_history:read']],
+    denormalizationContext: ['groups' => ['visitor_history:write']]
 )]
 class VisitorHistory
 {
@@ -56,6 +56,9 @@ class VisitorHistory
 
     #[ORM\Column]
     private ?bool $isCorrect = null;
+
+    #[Groups(['visitor_history:write'])]
+    private ?string $binaryValue = null;
 
     public function getId(): ?int
     {
@@ -107,6 +110,18 @@ class VisitorHistory
     public function setIsCorrect(bool $isCorrect): self
     {
         $this->isCorrect = $isCorrect;
+
+        return $this;
+    }
+
+    public function getBinaryValue(): ?string
+    {
+        return $this->binaryValue;
+    }
+
+    public function setBinaryValue(?string $binaryValue): self
+    {
+        $this->binaryValue = $binaryValue;
 
         return $this;
     }
