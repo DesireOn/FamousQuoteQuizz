@@ -48,7 +48,7 @@
       <v-card-text>You have successfully completed our quiz!</v-card-text>
       <v-card-text>Number of correct answers: {{ scoring.numberOfCorrectAnswers }}</v-card-text>
       <v-card-text>Number of wrong answers: {{ scoring.numberOfWrongAnswers }}</v-card-text>
-      <v-card-text>Your success rate is: {{ scoring.successRate }}</v-card-text>
+      <v-card-text>Your success rate is: {{ scoring.successRate }}%</v-card-text>
     </v-card>
   </div>
 </template>
