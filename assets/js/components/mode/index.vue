@@ -7,6 +7,8 @@
         :visitor="visitor"
         :show-success="showSuccess"
         :show-error="showError"
+        :show-scoring="showScoring"
+        :score="scoring"
         @change-view="changeView"
         @generate-next-question="generateNextQuestion"
         @change-status-state="changeStatusState"
@@ -35,14 +37,28 @@ export default {
     return {
       showSuccess: false,
       showError: false,
+      scoring: {},
+      showScoring: false
     }
   },
   methods: {
     changeView(mode) {
       this.visitor.settings.view_mode = mode;
     },
-    generateNextQuestion(nextQuestion) {
-      this.visitor.nextQuestion = nextQuestion;
+    async generateNextQuestion() {
+      try {
+        const getResponse = await axios.get(this.visitor['@id']+'/next-question');
+        if (getResponse.data.nextQuestion === undefined) { // No more questions left for this visitor
+          const getResponse = await axios.get('/api/scorings/'+this.visitor.session);
+          this.scoring = getResponse.data;
+          this.showScoring = true;
+        } else {
+          this.visitor.nextQuestion = getResponse.data.nextQuestion;
+        }
+        this.showSuccess = false;
+        this.showError = false;
+      } catch (error) {
+      }
     },
     async changeStatusState(mode, selectedAnswer) {
       if (mode === 'multiple-choice') {

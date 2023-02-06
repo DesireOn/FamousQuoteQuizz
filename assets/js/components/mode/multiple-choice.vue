@@ -83,6 +83,14 @@ export default {
       type: Boolean,
       required: true
     },
+    showScoring: {
+      type: Boolean,
+      required: true
+    },
+    score: {
+      type: Object,
+      required: true
+    }
   },
   emits: ['change-view', 'generate-next-question', 'change-status-state'],
   data() {
@@ -97,23 +105,10 @@ export default {
       this.$emit('change-view', mode);
     },
     saveHistory() {
-      this.$emit('change-status-state', 'multiple-choice', this.selectedAnswer)
+      this.$emit('change-status-state', 'multiple-choice', this.selectedAnswer);
     },
     async generateNextQuestion() {
-      try {
-        const getResponse = await axios.get(this.visitor['@id']+'/next-question');
-        if (getResponse.data.nextQuestion === undefined) { // No more questions left for this visitor
-          const getResponse = await axios.get('/api/scorings/'+this.visitor.session);
-          this.scoring = getResponse.data;
-          this.showScoring = true;
-        } else {
-          this.$emit('generate-next-question', getResponse.data.nextQuestion);
-        }
-        this.showSuccess = false;
-        this.showError = false;
-      } catch (error) {
-        console.error(error);
-      }
+      this.$emit('generate-next-question');
     },
     async startAgain() {
       const getResponse = await axios.get(this.visitor['@id']);
