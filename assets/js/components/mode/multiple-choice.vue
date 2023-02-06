@@ -61,7 +61,6 @@
 
 <script>
 
-import axios from "axios";
 import MultipleChoiceSuccessComponent from "./multiple-choice-success.vue";
 import MultipleChoiceErrorComponent from "./multiple-choice-error.vue";
 
@@ -87,12 +86,12 @@ export default {
       type: Boolean,
       required: true
     },
-    score: {
+    scoring: {
       type: Object,
       required: true
     }
   },
-  emits: ['change-view', 'generate-next-question', 'change-status-state'],
+  emits: ['change-view', 'generate-next-question', 'change-status-state', 'start-again'],
   data() {
     return {
       selectedAnswer: null,
@@ -105,18 +104,11 @@ export default {
     saveHistory() {
       this.$emit('change-status-state', 'multiple-choice', this.selectedAnswer);
     },
-    async generateNextQuestion() {
+    generateNextQuestion() {
       this.$emit('generate-next-question');
     },
-    async startAgain() {
-      const getResponse = await axios.get(this.visitor['@id']);
-      let newVisitorObject = await getResponse.data;
-      await newVisitorObject.visitorHistory.forEach(
-        history => axios.delete(history)
-      )
-      await this.generateNextQuestion();
-      this.showScoring = false;
-      this.visitor = new newVisitorObject;
+    startAgain() {
+      this.$emit('start-again');
     }
   }
 };

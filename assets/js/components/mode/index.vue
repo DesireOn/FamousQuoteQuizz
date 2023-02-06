@@ -8,10 +8,11 @@
         :show-success="showSuccess"
         :show-error="showError"
         :show-scoring="showScoring"
-        :score="scoring"
+        :scoring="scoring"
         @change-view="changeView"
         @generate-next-question="generateNextQuestion"
         @change-status-state="changeStatusState"
+        @start-again="startAgain"
     />
   </div>
 </template>
@@ -80,6 +81,16 @@ export default {
       } else {
         const postResponse = {};
       }
+    },
+    async startAgain() {
+      const getResponse = await axios.get(this.visitor['@id']);
+      let newVisitorObject = await getResponse.data;
+      await newVisitorObject.visitorHistory.forEach(
+          history => axios.delete(history)
+      )
+      await this.generateNextQuestion();
+      this.showScoring = false;
+      this.visitor = new newVisitorObject;
     }
   }
 };
