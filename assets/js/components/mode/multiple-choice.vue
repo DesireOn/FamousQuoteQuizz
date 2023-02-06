@@ -75,13 +75,19 @@ export default {
       type: Object,
       required: true
     },
+    showSuccess: {
+      type: Boolean,
+      required: true
+    },
+    showError: {
+      type: Boolean,
+      required: true
+    },
   },
-  emits: ['change-view', 'generate-next-question'],
+  emits: ['change-view', 'generate-next-question', 'change-status-state'],
   data() {
     return {
       selectedAnswer: null,
-      showSuccess: false,
-      showError: false,
       scoring: {},
       showScoring: false
     }
@@ -92,18 +98,7 @@ export default {
     },
     async saveHistory() {
       try {
-        const postResponse = await axios.post('/api/visitor_histories/multiple-choice', {
-          'visitor': this.visitor['@id'],
-          'question': this.visitor.nextQuestion['@id'],
-          'answer': this.selectedAnswer
-        });
-
-        const getResponse = await axios.get(postResponse.data['@id']);
-        if (getResponse.data.correct) {
-          this.showSuccess = true;
-        } else {
-          this.showError = true;
-        }
+        this.$emit('change-status-state', 'multiple-choice', this.selectedAnswer)
       } catch (error) {
         console.error(error);
       }
