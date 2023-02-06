@@ -32,8 +32,8 @@
   </div>
 
   <div v-if="showSuccess || showError">
-    <multiple-choice-success-component v-if="showSuccess"/>
-    <multiple-choice-error-component v-if="showError"/>
+    <success-message-component v-if="showSuccess"/>
+    <error-message-component v-if="showError"/>
 
     <div class="d-flex justify-space-around">
       <v-btn color="primary" @click="generateNextQuestion" class="mt-3">
@@ -61,13 +61,13 @@
 
 <script>
 
-import MultipleChoiceSuccessComponent from "./multiple-choice-success.vue";
-import MultipleChoiceErrorComponent from "./multiple-choice-error.vue";
+import SuccessMessageComponent from "./success-message.vue";
+import ErrorMessageComponent from "./error-message.vue";
 
 export default {
   name: 'multipleChoice',
   components: {
-    MultipleChoiceSuccessComponent, MultipleChoiceErrorComponent
+    SuccessMessageComponent, ErrorMessageComponent
   },
   props: {
     visitor: {
