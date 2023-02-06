@@ -2,27 +2,7 @@
   <choose-mode @change-view="changeView"/>
 
   <div v-if="!showSuccess && !showError && !showScoring">
-    <div class="d-flex center mt-3">
-      <v-card class="mx-auto" color="primary">
-        <v-card-text>"{{ visitor.nextQuestion.name }}"</v-card-text>
-      </v-card>
-    </div>
-    <div class="d-flex flex-column align-center justify-center mx-auto mt-3">
-      <v-radio-group v-model="selectedAnswer">
-        <v-radio
-            color="primary"
-            v-for="option in visitor.nextQuestion.questionSuggestions"
-            :key="option['@id']"
-            :label="option.answer.name"
-            :value="option.answer['@id']">
-        </v-radio>
-      </v-radio-group>
-    </div>
-    <div class="d-flex justify-space-around">
-      <v-btn color="primary" @click="saveHistory">
-        Submit
-      </v-btn>
-    </div>
+    <current-question :visitor="visitor" @change-status-state="saveHistory"/>
   </div>
 
   <next-question-component
@@ -53,14 +33,14 @@
 import SuccessMessageComponent from "../success-message.vue";
 import ErrorMessageComponent from "../error-message.vue";
 import NextQuestionComponent from "../next-question.vue";
-import ChooseModeComponent from "./choose-mode.vue";
 import ChooseMode from "./choose-mode.vue";
+import currentQuestion from "./current-question.vue";
 
 export default {
   name: 'multipleChoice',
   components: {
     ChooseMode,
-    SuccessMessageComponent, ErrorMessageComponent, NextQuestionComponent
+    SuccessMessageComponent, ErrorMessageComponent, NextQuestionComponent, currentQuestion
   },
   props: {
     visitor: {
@@ -85,17 +65,12 @@ export default {
     }
   },
   emits: ['change-view', 'generate-next-question', 'change-status-state', 'start-again'],
-  data() {
-    return {
-      selectedAnswer: null,
-    }
-  },
   methods: {
     changeView(mode) {
       this.$emit('change-view', mode);
     },
-    saveHistory() {
-      this.$emit('change-status-state', 'multiple-choice', this.selectedAnswer);
+    saveHistory(mode, selectedAnswer) {
+      this.$emit('change-status-state', 'multiple-choice', selectedAnswer);
     },
     generateNextQuestion() {
       this.$emit('generate-next-question');
