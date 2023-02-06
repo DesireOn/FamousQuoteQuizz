@@ -96,12 +96,8 @@ export default {
     changeView(mode) {
       this.$emit('change-view', mode);
     },
-    async saveHistory() {
-      try {
-        this.$emit('change-status-state', 'multiple-choice', this.selectedAnswer)
-      } catch (error) {
-        console.error(error);
-      }
+    saveHistory() {
+      this.$emit('change-status-state', 'multiple-choice', this.selectedAnswer)
     },
     async generateNextQuestion() {
       try {
