@@ -19,7 +19,7 @@
 
 <script>
 
-import MultipleChoice from "./multiple-choice.vue";
+import MultipleChoice from "./multiple-choice/index.vue";
 import Binary from "./binary.vue";
 import axios from "axios";
 

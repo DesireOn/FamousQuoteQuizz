@@ -56,9 +56,9 @@
 
 <script>
 
-import SuccessMessageComponent from "./success-message.vue";
-import ErrorMessageComponent from "./error-message.vue";
-import NextQuestionComponent from "./next-question.vue";
+import SuccessMessageComponent from "../success-message.vue";
+import ErrorMessageComponent from "../error-message.vue";
+import NextQuestionComponent from "../next-question.vue";
 
 export default {
   name: 'multipleChoice',
