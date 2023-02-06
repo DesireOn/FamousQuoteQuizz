@@ -1,12 +1,6 @@
 <template>
-  <div class="d-flex justify-space-around">
-    <v-btn variant="outlined" @click="changeView('multiple_choice')">
-      Multiple choice Mode
-    </v-btn>
-    <v-btn variant="plain" @click="changeView('binary')">
-      Binary (Yes/No) Mode
-    </v-btn>
-  </div>
+  <choose-mode @change-view="changeView"/>
+
   <div v-if="!showSuccess && !showError && !showScoring">
     <div class="d-flex center mt-3">
       <v-card class="mx-auto" color="primary">
@@ -59,10 +53,13 @@
 import SuccessMessageComponent from "../success-message.vue";
 import ErrorMessageComponent from "../error-message.vue";
 import NextQuestionComponent from "../next-question.vue";
+import ChooseModeComponent from "./choose-mode.vue";
+import ChooseMode from "./choose-mode.vue";
 
 export default {
   name: 'multipleChoice',
   components: {
+    ChooseMode,
     SuccessMessageComponent, ErrorMessageComponent, NextQuestionComponent
   },
   props: {
