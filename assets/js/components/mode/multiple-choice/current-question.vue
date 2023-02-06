@@ -1,9 +1,5 @@
 <template>
-  <div class="d-flex center mt-3">
-    <v-card class="mx-auto" color="primary">
-      <v-card-text>"{{ visitor.nextQuestion.name }}"</v-card-text>
-    </v-card>
-  </div>
+  <question-description :visitor="visitor"/>
   <div class="d-flex flex-column align-center justify-center mx-auto mt-3">
     <v-radio-group v-model="selectedAnswer">
       <v-radio
@@ -15,16 +11,18 @@
       </v-radio>
     </v-radio-group>
   </div>
-  <div class="d-flex justify-space-around">
-    <v-btn color="primary" @click="saveHistory">
-      Submit
-    </v-btn>
-  </div>
+  <submit @change-status-state="saveHistory" />
 </template>
 
 <script>
+import questionDescription from "../question-description.vue";
+import submit from "../submit.vue";
+
 export default {
   name: 'currentQuestion',
+  components: {
+    questionDescription, submit
+  },
   props: {
     visitor: {
       type: Object,
