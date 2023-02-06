@@ -31,16 +31,11 @@
     </div>
   </div>
 
-  <div v-if="showSuccess || showError">
-    <success-message-component v-if="showSuccess"/>
-    <error-message-component v-if="showError"/>
-
-    <div class="d-flex justify-space-around">
-      <v-btn color="primary" @click="generateNextQuestion" class="mt-3">
-        Next Question
-      </v-btn>
-    </div>
-  </div>
+  <next-question-component
+      :show-error="showError"
+      :show-success="showSuccess"
+      @generate-next-question="generateNextQuestion"
+  />
 
   <div v-if="showScoring">
     <v-card class="mx-auto mt-3" color="green">
@@ -63,11 +58,12 @@
 
 import SuccessMessageComponent from "./success-message.vue";
 import ErrorMessageComponent from "./error-message.vue";
+import NextQuestionComponent from "./next-question.vue";
 
 export default {
   name: 'multipleChoice',
   components: {
-    SuccessMessageComponent, ErrorMessageComponent
+    SuccessMessageComponent, ErrorMessageComponent, NextQuestionComponent
   },
   props: {
     visitor: {
