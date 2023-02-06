@@ -96,8 +96,6 @@ export default {
   data() {
     return {
       selectedAnswer: null,
-      scoring: {},
-      showScoring: false
     }
   },
   methods: {
