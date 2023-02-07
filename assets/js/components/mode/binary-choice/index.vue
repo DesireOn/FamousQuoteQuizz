@@ -7,44 +7,24 @@
       Binary (Yes/No) Mode
     </v-btn>
   </div>
-  <div class="d-flex center mt-3">
-    <v-card class="mx-auto" color="primary">
-      <v-card-text>"{{ visitor.nextQuestion.name }}"</v-card-text>
-    </v-card>
-  </div>
-
-  <div class="d-flex flex-column align-center justify-center mx-auto mt-3">
-    <v-card-text>
-      {{ selectedSuggestion.answer.name }}?
-    </v-card-text>
-  </div>
-
-  <div class="d-flex justify-space-around align-center flex-column flex-md-row fill-height">
-    <v-btn color="green">
-      Yes
-    </v-btn>
-    <v-btn rounded="lg" color="red">
-      No
-    </v-btn>
-  </div>
+  <question-description :visitor="visitor" />
+  <suggestion :visitor="visitor" />
+  <answer />
 </template>
 
 <script>
+import questionDescription from "../question-description.vue";
+import suggestion from "./suggestion.vue";
+import answer from "./answer.vue";
+
 export default {
   name: 'binary',
+  components: { questionDescription, suggestion, answer },
   props: {
     visitor: {
       type: Object,
       required: true
     },
-  },
-  setup(props) {
-    const suggestions = props.visitor.nextQuestion.questionSuggestions;
-    const selectedSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-
-    return {
-      selectedSuggestion
-    }
   },
   emits: ['change-view', 'generate-next-question'],
   methods: {
