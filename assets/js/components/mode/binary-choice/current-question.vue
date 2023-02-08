@@ -4,6 +4,14 @@
       {{ selectedSuggestion.answer.name }}?
     </v-card-text>
   </div>
+  <div class="d-flex justify-space-around align-center flex-column flex-md-row fill-height">
+    <v-btn color="green" @click="answerPicked('y')">
+      Yes
+    </v-btn>
+    <v-btn rounded="lg" color="red" @click="answerPicked('n')">
+      No
+    </v-btn>
+  </div>
 </template>
 
 <script>
@@ -23,5 +31,11 @@ export default {
       selectedSuggestion
     }
   },
+  emits: ['answer-picked'],
+  methods: {
+    answerPicked(binaryValue) {
+      this.$emit('answer-picked', this.selectedSuggestion.answer['@id'], binaryValue);
+    }
+  }
 }
 </script>
