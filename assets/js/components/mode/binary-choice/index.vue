@@ -8,18 +8,16 @@
     </v-btn>
   </div>
   <question-description :visitor="visitor" />
-  <suggestion :visitor="visitor" />
-  <answer />
+  <current-question :visitor="visitor" @answer-picked="answerPicked" />
 </template>
 
 <script>
 import questionDescription from "../question-description.vue";
-import suggestion from "./suggestion.vue";
-import answer from "./answer.vue";
+import currentQuestion from "./current-question.vue";
 
 export default {
   name: 'binary',
-  components: { questionDescription, suggestion, answer },
+  components: { questionDescription, currentQuestion },
   props: {
     visitor: {
       type: Object,
@@ -30,6 +28,9 @@ export default {
   methods: {
     changeView(mode) {
       this.$emit('change-view', mode);
+    },
+    answerPicked(selectedAnswer, binaryValue) {
+      this.$emit('change-status-state', 'binary', selectedAnswer, binaryValue);
     }
   }
 }
