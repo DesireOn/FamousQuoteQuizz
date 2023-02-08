@@ -1,6 +1,16 @@
 <template>
   <div v-if="visitor && visitor.settings && visitor.settings.view_mode === 'binary'">
-    <binary :visitor="visitor" @change-view="changeView" @generate-next-question="generateNextQuestion"/>
+    <binary
+        :visitor="visitor"
+        :show-success="showSuccess"
+        :show-error="showError"
+        :show-scoring="showScoring"
+        :scoring="scoring"
+        @change-view="changeView"
+        @generate-next-question="generateNextQuestion"
+        @change-status-state="changeStatusState"
+        @start-again="startAgain"
+    />
   </div>
   <div v-if="visitor && visitor.settings && visitor.settings.view_mode === 'multiple_choice'">
     <multiple-choice
@@ -61,7 +71,7 @@ export default {
       } catch (error) {
       }
     },
-    async changeStatusState(mode, selectedAnswer) {
+    async changeStatusState(mode, selectedAnswer, binaryValue = null) {
       if (mode === 'multiple-choice') {
         try {
           const postResponse = await axios.post('/api/visitor_histories/multiple-choice', {
@@ -78,8 +88,23 @@ export default {
           }
         } catch (error) {
         }
-      } else {
-        const postResponse = {};
+      } else if (mode === 'binary') {
+        try {
+          const postResponse = await axios.post('/api/visitor_histories/binary', {
+            'visitor': this.visitor['@id'],
+            'question': this.visitor.nextQuestion['@id'],
+            'answer': selectedAnswer,
+            'binaryValue': binaryValue
+          });
+
+          const getResponse = await axios.get(postResponse.data['@id']);
+          if (getResponse.data.correct) {
+            this.showSuccess = true;
+          } else {
+            this.showError = true;
+          }
+        } catch (error) {
+        }
       }
     },
     async startAgain() {
