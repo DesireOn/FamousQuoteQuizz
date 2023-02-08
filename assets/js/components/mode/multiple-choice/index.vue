@@ -12,19 +12,8 @@
   />
 
   <div v-if="showScoring">
-    <v-card class="mx-auto mt-3" color="green">
-      <v-card-text>Congrats!</v-card-text>
-      <v-card-text>You have successfully completed our quiz!</v-card-text>
-      <v-card-text>Number of correct answers: {{ scoring.numberOfCorrectAnswers }}</v-card-text>
-      <v-card-text>Number of wrong answers: {{ scoring.numberOfWrongAnswers }}</v-card-text>
-      <v-card-text>Your success rate is: {{ scoring.successRate }}%</v-card-text>
-    </v-card>
-
-    <div class="d-flex justify-space-around">
-      <v-btn color="primary" @click="startAgain" class="mt-3">
-        Start Again
-      </v-btn>
-    </div>
+    <stats :scoring="scoring" />
+    <start-again @start-again="startAgain" />
   </div>
 </template>
 
@@ -35,12 +24,13 @@ import ErrorMessageComponent from "../error-message.vue";
 import NextQuestionComponent from "../next-question.vue";
 import ChooseMode from "./choose-mode.vue";
 import currentQuestion from "./current-question.vue";
-
+import stats from "../stats.vue";
+import startAgain from "../startAgain.vue";
 export default {
   name: 'multipleChoice',
   components: {
     ChooseMode,
-    SuccessMessageComponent, ErrorMessageComponent, NextQuestionComponent, currentQuestion
+    SuccessMessageComponent, ErrorMessageComponent, NextQuestionComponent, currentQuestion, startAgain, stats
   },
   props: {
     visitor: {

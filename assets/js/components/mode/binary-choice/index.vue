@@ -19,19 +19,8 @@
   />
 
   <div v-if="showScoring">
-    <v-card class="mx-auto mt-3" color="green">
-      <v-card-text>Congrats!</v-card-text>
-      <v-card-text>You have successfully completed our quiz!</v-card-text>
-      <v-card-text>Number of correct answers: {{ scoring.numberOfCorrectAnswers }}</v-card-text>
-      <v-card-text>Number of wrong answers: {{ scoring.numberOfWrongAnswers }}</v-card-text>
-      <v-card-text>Your success rate is: {{ scoring.successRate }}%</v-card-text>
-    </v-card>
-
-    <div class="d-flex justify-space-around">
-      <v-btn color="primary" @click="startAgain" class="mt-3">
-        Start Again
-      </v-btn>
-    </div>
+    <stats :scoring="scoring" />
+    <start-again @start-again="startAgain" />
   </div>
 </template>
 
@@ -39,10 +28,14 @@
 import questionDescription from "../question-description.vue";
 import currentQuestion from "./current-question.vue";
 import nextQuestionComponent from "../next-question.vue";
+import stats from "../stats.vue";
+import startAgain from "../startAgain.vue";
 
 export default {
   name: 'binary',
-  components: { questionDescription, currentQuestion, nextQuestionComponent },
+  components: {
+    questionDescription, currentQuestion, nextQuestionComponent, startAgain, stats
+  },
   props: {
     visitor: {
       type: Object,
