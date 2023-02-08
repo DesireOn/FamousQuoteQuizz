@@ -9,7 +9,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use App\DataProvider\GetCorrectAnswerProvider;
 use App\Repository\VisitorHistoryRepository;
 use App\State\VisitorHistoryBinaryStateProcessor;
 use App\State\VisitorHistoryMultipleChoiceStateProcessor;
@@ -19,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: VisitorHistoryRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(provider: GetCorrectAnswerProvider::class),
+        new Get(),
         new GetCollection(),
         new Post(
             uriTemplate: '/visitor_histories/binary',
