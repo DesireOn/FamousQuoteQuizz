@@ -45,13 +45,14 @@ export default {
   },
   async mounted() {
     if (localStorage.session_id) {
-      const response = await axios.get('/api/visitors/'+localStorage.session_id);
-      this.visitor = response.data;
+      const getResponse = await axios.get('/api/visitors/'+localStorage.session_id);
+      this.visitor = getResponse.data;
     } else {
-      const response = await axios.post('/api/visitors', {});
-      if (response.status === 201) {
-        localStorage.session_id = response.data.session;
-        this.visitor = response.data;
+      const postResponse = await axios.post('/api/visitors', {});
+      if (postResponse.status === 201) {
+        localStorage.session_id = postResponse.data.session;
+        const getResponse = await axios.get('/api/visitors/'+localStorage.session_id);
+        this.visitor = getResponse.data;
       }
     }
   },
