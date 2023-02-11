@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import Visitor from "../components/visitor.vue";
 import settings from "./settings/index.vue";
 import axios from "axios";
 import mode from "../components/mode/index.vue";
@@ -24,7 +23,7 @@ import mode from "../components/mode/index.vue";
 export default {
   name: 'Index',
   components: {
-    Visitor, settings, mode
+    settings, mode
   },
   data() {
     return {
