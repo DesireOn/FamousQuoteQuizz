@@ -58,7 +58,7 @@ export default {
       required: true
     }
   },
-  emits: ['change-view', 'generate-next-question'],
+  emits: ['change-view', 'generate-next-question', 'change-status-state', 'start-again'],
   methods: {
     changeView(mode) {
       this.$emit('change-view', mode);
