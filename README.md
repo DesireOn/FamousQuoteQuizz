@@ -1,4 +1,5 @@
 # Famous Quote Quiz
+A project built on Symfony MVC + VueJS. Docker is being used for local development.
 
 To get it working, follow these steps:
 
